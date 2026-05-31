@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  plugin.xml – SkaDate/Oxwall plugin manifest.
+  The platform reads this file when scanning the plugins directory.
+-->
+<plugin>
+    <name>Promo Banner</name>
+    <key>promo_banner</key>
+    <description>Profile-based promotional banner targeting users by sex and language.</description>
+    <author>Plugin Author</author>
+    <authorEmail>author@example.com</authorEmail>
+    <authorUrl>https://example.com</authorUrl>
+    <version>1.0.0</version>
+    <build>1</build>
+    <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+    <adminPage>promo_banner_admin</adminPage>
+</plugin>

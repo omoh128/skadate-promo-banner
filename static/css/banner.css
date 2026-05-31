@@ -1,0 +1,142 @@
+/* ============================================================
+   Promo Banner – banner.css
+   Injected on every front-end page for authenticated users.
+   ============================================================ */
+
+/* ── Banner container ──────────────────────────────────────── */
+.pb-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 20px;
+    margin: 0 0 16px;
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
+    color: #fff;
+    font-family: inherit;
+    position: relative;
+    animation: pb-slide-in 0.35s ease-out both;
+}
+
+@keyframes pb-slide-in {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* ── Text area ────────────────────────────────────────────── */
+.pb-banner__content {
+    flex: 1;
+    min-width: 0;
+}
+
+.pb-banner__title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0 0 4px;
+    line-height: 1.3;
+}
+
+.pb-banner__body {
+    font-size: 0.875rem;
+    margin: 0;
+    opacity: 0.92;
+    line-height: 1.5;
+}
+
+/* ── Call-to-action button ────────────────────────────────── */
+.pb-banner__cta {
+    display: inline-block;
+    padding: 8px 18px;
+    background: #fff;
+    color: #1d4ed8;
+    border-radius: 5px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.15s, color 0.15s, transform 0.1s;
+    flex-shrink: 0;
+}
+
+.pb-banner__cta:hover {
+    background: #eff6ff;
+    transform: translateY(-1px);
+}
+
+.pb-banner__cta:active {
+    transform: translateY(0);
+}
+
+/* ── Dismiss button ───────────────────────────────────────── */
+.pb-banner__dismiss {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: rgba(255,255,255,0.75);
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: 0 0 0 8px;
+    transition: color 0.15s;
+    flex-shrink: 0;
+}
+
+.pb-banner__dismiss:hover {
+    color: #fff;
+}
+
+/* ── Fade out on dismiss ─────────────────────────────────── */
+.pb-banner--dismissed {
+    animation: pb-fade-out 0.25s ease-in forwards;
+}
+
+@keyframes pb-fade-out {
+    to { opacity: 0; max-height: 0; padding: 0; margin: 0; overflow: hidden; }
+}
+
+/* ── Admin panel overrides ────────────────────────────────── */
+.promo-banner-admin__table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.promo-banner-admin__table th,
+.promo-banner-admin__table td {
+    padding: 8px 12px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.promo-banner-admin__row--active {
+    background: #f0f9ff;
+}
+
+.promo-banner-admin__badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.promo-banner-admin__badge--active {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.promo-banner-admin__section-title {
+    margin: 0 0 16px;
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.promo-banner-admin__empty-state {
+    padding: 12px 0;
+}
+
+.promo-banner-admin__delete-form {
+    display: inline;
+}

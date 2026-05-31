@@ -1,0 +1,177 @@
+{*
+  Admin Panel Template – Promo Banner Plugin
+  Native SkaDate/Oxwall Smarty template.
+  Variables supplied by AdminPanel::onBeforeRender() and the controller.
+*}
+
+<div class="promo-banner-admin ow_box">
+
+    {* ── Page header ─────────────────────────────────────────────────── *}
+    <div class="ow_box_caption">
+        <span>{$smarty.capture.promo_banner_admin_page_title|escape}</span>
+    </div>
+
+    {* ── Feedback messages injected by OW::getFeedback() ─────────────── *}
+    {include file="base_add_feedback"}
+
+    {* ── Existing banners table ──────────────────────────────────────── *}
+    <div class="promo-banner-admin__list ow_box_content">
+        <h3 class="promo-banner-admin__section-title">
+            {text key="promo_banner+admin_existing_banners"}
+        </h3>
+
+        {if $banners}
+            <table class="promo-banner-admin__table ow_table">
+                <thead>
+                    <tr>
+                        <th>{text key="promo_banner+col_title"}</th>
+                        <th>{text key="promo_banner+col_target_sex"}</th>
+                        <th>{text key="promo_banner+col_target_language"}</th>
+                        <th>{text key="promo_banner+col_status"}</th>
+                        <th>{text key="promo_banner+col_created"}</th>
+                        <th>{text key="promo_banner+col_actions"}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {foreach $banners as $banner}
+                    <tr class="{if $banner->isActive}promo-banner-admin__row--active{/if}">
+                        <td>{$banner->title|escape}</td>
+                        <td>{$banner->targetSex|escape}</td>
+                        <td>{$banner->targetLanguage|escape}</td>
+                        <td>
+                            {if $banner->isActive}
+                                <span class="promo-banner-admin__badge promo-banner-admin__badge--active">
+                                    {text key="promo_banner+status_active"}
+                                </span>
+                            {else}
+                                <span class="promo-banner-admin__badge">
+                                    {text key="promo_banner+status_inactive"}
+                                </span>
+                            {/if}
+                        </td>
+                        <td>{$banner->createdAt|date_format:"%d %b %Y"}</td>
+                        <td>
+                            <form method="post" action="{$deleteAction|escape}" class="promo-banner-admin__delete-form">
+                                <input type="hidden" name="id"         value="{$banner->id}">
+                                <input type="hidden" name="csrf_token" value="{$csrfToken|escape}">
+                                <button type="submit"
+                                        class="ow_button ow_delete"
+                                        onclick="return confirm('{text key='promo_banner+confirm_delete'}');">
+                                    {text key="promo_banner+action_delete"}
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {/foreach}
+                </tbody>
+            </table>
+        {else}
+            <p class="promo-banner-admin__empty-state ow_remark">
+                {text key="promo_banner+no_banners_yet"}
+            </p>
+        {/if}
+    </div>
+
+    {* ── Create banner form ───────────────────────────────────────────── *}
+    <div class="promo-banner-admin__form ow_box_content">
+        <h3 class="promo-banner-admin__section-title">
+            {text key="promo_banner+admin_create_banner"}
+        </h3>
+
+        <form method="post" action="{$formAction|escape}" class="ow_form">
+            <input type="hidden" name="csrf_token" value="{$csrfToken|escape}">
+
+            {* Title *}
+            <div class="ow_form_row">
+                <label class="ow_label" for="pb_title">
+                    {text key="promo_banner+field_title"} <span class="ow_required">*</span>
+                </label>
+                <input type="text"
+                       id="pb_title"
+                       name="title"
+                       class="ow_text"
+                       maxlength="120"
+                       required>
+            </div>
+
+            {* Body *}
+            <div class="ow_form_row">
+                <label class="ow_label" for="pb_body">
+                    {text key="promo_banner+field_body"} <span class="ow_required">*</span>
+                </label>
+                <textarea id="pb_body"
+                          name="body"
+                          class="ow_textarea"
+                          rows="4"
+                          maxlength="500"
+                          required></textarea>
+            </div>
+
+            {* CTA URL *}
+            <div class="ow_form_row">
+                <label class="ow_label" for="pb_cta_url">
+                    {text key="promo_banner+field_cta_url"} <span class="ow_required">*</span>
+                </label>
+                <input type="url"
+                       id="pb_cta_url"
+                       name="cta_url"
+                       class="ow_text"
+                       placeholder="https://"
+                       required>
+            </div>
+
+            {* CTA Label *}
+            <div class="ow_form_row">
+                <label class="ow_label" for="pb_cta_label">
+                    {text key="promo_banner+field_cta_label"} <span class="ow_required">*</span>
+                </label>
+                <input type="text"
+                       id="pb_cta_label"
+                       name="cta_label"
+                       class="ow_text"
+                       maxlength="60"
+                       required>
+            </div>
+
+            {* Target sex *}
+            <div class="ow_form_row">
+                <label class="ow_label" for="pb_target_sex">
+                    {text key="promo_banner+field_target_sex"}
+                </label>
+                <select id="pb_target_sex" name="target_sex" class="ow_select">
+                    {foreach $sexOptions as $value => $label}
+                        <option value="{$value|escape}">{$label|escape}</option>
+                    {/foreach}
+                </select>
+            </div>
+
+            {* Target language *}
+            <div class="ow_form_row">
+                <label class="ow_label" for="pb_target_language">
+                    {text key="promo_banner+field_target_language"}
+                </label>
+                <select id="pb_target_language" name="target_language" class="ow_select">
+                    {foreach $languageOptions as $value => $label}
+                        <option value="{$value|escape}">{$label|escape}</option>
+                    {/foreach}
+                </select>
+            </div>
+
+            {* Active toggle *}
+            <div class="ow_form_row">
+                <label class="ow_label">
+                    <input type="checkbox" name="is_active" value="1" checked>
+                    {text key="promo_banner+field_make_active"}
+                </label>
+                <p class="ow_remark">{text key="promo_banner+field_make_active_hint"}</p>
+            </div>
+
+            <div class="ow_form_row ow_form_submit">
+                <button type="submit" class="ow_button ow_positive">
+                    {text key="promo_banner+btn_save_banner"}
+                </button>
+            </div>
+        </form>
+    </div>
+
+</div>
