@@ -1,6 +1,7 @@
 {
     "name": "skadate/promo-banner",
     "description": "Profile-Based Promo Banner Plugin for SkaDate / Oxwall",
+    "version": "1.0.0",
     "type": "oxwall-plugin",
     "license": "MIT",
     "require": {
